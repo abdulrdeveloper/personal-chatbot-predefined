@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Personal Chatbot Predefined",
-  description: "A predefined personal chatbot for handling common queries and tasks.",
+  title: "HiteshBot | A Predefined Chatbot",
+  description: "A predefined chatbot",
 };
 
 export default function RootLayout({
@@ -12,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100">
+    <html lang="en">
+      <body>
         {children}
       </body>
     </html>

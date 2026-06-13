@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HiteshBot (Predefined Chatbot)
+
+A simple predefined chatbot web app built with **Next.js** and **React**. The bot matches your message against predefined **intents** (patterns) and replies with a random response from the matching intent.
+
+> No backend / AI model is used — replies come from `app/data/hitesh_chatbot.json`.
+
+---
+
+## Live Features
+
+- Chat UI with user + bot messages
+- Typing support + **Enter** to send
+- Auto-scroll to the latest message
+- Predefined intent matching:
+  - Input is lowercased and trimmed
+  - The app checks whether the input **includes** any intent pattern
+  - Returns a random response from the matched intent
+
+---
+
+## Tech Stack
+
+- **Next.js 16.2.7** (App Router)
+- **React 19**
+- **TypeScript**
+- Styling via **global CSS** in `app/globals.css`
+
+---
+
+## How It Works
+
+### Pages / Layout
+- `app/layout.tsx`
+  - Sets page metadata (title/description)
+  - Wraps the app with `<html>` / `<body>`
+
+- `app/page.tsx`
+  - Renders the header (“HiteshBot”)
+  - Renders the chat UI via `MessageList`
+  - Renders a small footer disclaimer
+
+### Chat Logic
+- `app/components/main/MessageList.tsx` (client component)
+  - Holds `messages` state (initial bot greeting + appended user/bot messages)
+  - Uses `ChatBotData` imported from:
+    - `app/data/hitesh_chatbot.json`
+  - Main matching function:
+    - `findUserRes(input)`
+    - Loops through `ChatBotData.intents`
+    - Checks patterns via substring match (`text.includes(pattern)`)
+    - Returns a random response from `intent.responses`
+    - Fallback: `I'm sorry, I didn't understand that.`
+
+### Data (Intents / Responses)
+- `app/data/hitesh_chatbot.json`
+  - Structure:
+    - `intents: [{ tag, patterns: string[], responses: string[] }, ...]`
+
+---
+
+## Project Structure (Key Files)
+
+- `app/page.tsx` - Home page UI
+- `app/layout.tsx` - Root layout + metadata
+- `app/components/main/MessageList.tsx` - Chat UI + intent matching
+- `app/data/hitesh_chatbot.json` - All predefined intents/responses
+- `app/globals.css` - Chat styling (dark theme, bubbles, input area)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js installed
 
+### Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Run Dev Server
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Start Production Server
+```bash
+npm start
+```
 
-## Learn More
+### Lint
+```bash
+npm run lint
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes / Limitations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Matching is **simple substring-based** and may produce unexpected matches.
+- Responses are **prewritten** — there is no dynamic generation.
+- If no intent pattern matches, the bot uses the fallback message.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT (see `LICENSE`)
